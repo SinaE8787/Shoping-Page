@@ -1,0 +1,226 @@
+.Header{
+    width: 100%;
+    height:15rem ;
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem;
+    z-index: 10;
+}
+/* //////////////topHead\\\\\\\\\\ */
+.topHead{
+    width: 100%;
+    height: 2rem;
+    background-color: rgba(30,31,41,255);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.AboutUs{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.AboutUs div {
+    display: flex;
+    gap: 1.5rem;
+}
+.AboutUs i{
+    padding-right: .3rem;
+}
+@media (max-width : 1000px){
+    .AboutUs{
+        width: 90%;
+    }
+}
+@media (max-width : 700px){
+.topHead{
+    display: none;
+}
+}
+/* //////////////Nav\\\\\\\\\\\ */
+.nav{
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(21,22,29,255) ;
+    border-bottom: 3px solid rgb(196, 0, 0);
+    color: white !important;
+    transition-duration: .3s;
+}
+/* ///////////////////nav search BOX\\\\\\\\\\\\\\\\\ */
+.navSearchbox{
+    width:60%;
+    height: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition-duration: .5s;
+}
+.Logo{
+    width: 20%;
+    height: 100%;
+}
+.Logo img{
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
+    object-position: center; 
+}
+.searchBox{
+    width: 50%;
+    height: 2.5rem;
+    border-radius: 10rem;
+    overflow: hidden;
+    transition-duration: .3s;
+}
+.searchBox input{
+    width: 80%;
+    height: 100%;
+    font-size: 1.05rem;
+    border: none;
+    color: black;
+    outline: none;
+    padding-left: 1rem;
+}
+.searchBox button{
+    width: 20%;
+    height: 100%;
+    font-size: 1.05rem;
+    border: none;
+    color: white;
+    background-color: rgb(223, 30, 62);
+    transition-duration: .3s;
+    cursor: pointer;
+}
+.searchBox button:hover{
+    box-shadow: 0 0 5px rgb(220, 12, 46) ;
+    background-color: rgb(247, 11, 11);
+}
+
+.wishAndBasket{
+    width: 20%;
+    height: 100%;
+    display: flex;
+}
+.wishAndBasket div{
+    width: 50%;
+    display: flex; 
+    align-items: center;
+    gap: .3rem;
+    flex-direction: column;
+    transition-duration: .4s;
+    cursor: pointer;
+}
+.wishAndBasket div:hover{
+    color: rgb(179, 3, 3);
+}
+.wishAndBasket div i{
+    font-size: 1.2rem;
+}
+@media (max-width : 1385px){
+    .navSearchbox{
+        width: 80%;
+    }
+}
+@media (max-width : 1000px){
+    .navSearchbox{
+        width: 99%;
+        gap: .5rem;
+    }
+}
+@media (max-width : 850px){
+    .searchBox{
+        width: 65%;
+    }
+    .wishAndBasket{
+        width: 12%;
+    }
+    .wishAndBasket span{
+        display: none;
+    }
+    .wishAndBasket i{
+        font-size: 1.3rem;
+    }
+    .wishAndBasket div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-width : 700px){
+    .nav{
+        height: 5rem;
+    }
+    .Logo{
+        width: 8rem;
+    }
+}
+/* ////////////////////////NavLinks\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+.navLinks{
+    width: 100%;
+    height: 3.5rem;
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-bottom: 1px solid rgba(191, 191, 191, 0.604);
+}
+.PageLinks{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.7rem;
+    padding-left: .5rem;
+    transition-duration: .3s;
+}
+.Links{
+    transition-duration: .3s;
+    text-decoration: none;
+    color: black;
+}
+@media (max-width : 1000px){
+    .PageLinks{
+        width: 95%;
+    }
+}
+@media (max-width : 700px){
+    .PageLinks{
+        gap: 0;
+        justify-content: space-evenly;
+    }
+}
+@media (max-width : 580px){
+    .navLinks{
+     position: relative;
+    }
+    .PageLinks{
+        display: none;
+     position: absolute;
+     top: 3rem;
+     left: 0;
+     padding: 0;
+     width: 100%;
+     height: 15rem;
+     flex-direction: column;
+     border: 1px solid gray;
+     background-color: rgb(255, 255, 255);
+     z-index: 5;
+    }
+    .Links{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2rem;
+    }
+    .Links:hover{
+        background-color: rgb(192, 192, 192);
+    }
+}
