@@ -1,12 +1,10 @@
 .Header{
     width: 100%;
-    height:15rem ;
     display: flex;
     flex-direction: column;
     font-size: .9rem;
     z-index: 10;
 }
-/* //////////////topHead\\\\\\\\\\ */
 .topHead{
     width: 100%;
     height: 2rem;
@@ -40,7 +38,6 @@
     display: none;
 }
 }
-/* //////////////Nav\\\\\\\\\\\ */
 .nav{
     width: 100%;
     height: 6rem;
@@ -53,7 +50,6 @@
     color: white !important;
     transition-duration: .3s;
 }
-/* ///////////////////nav search BOX\\\\\\\\\\\\\\\\\ */
 .navSearchbox{
     width:60%;
     height: 60%;
@@ -161,7 +157,6 @@
         width: 8rem;
     }
 }
-/* ////////////////////////NavLinks\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .navLinks{
     width: 100%;
     height: 3.5rem;

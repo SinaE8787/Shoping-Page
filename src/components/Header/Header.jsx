@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Hstyles from "./Header.module.css";
 import TopHeader from "./TopHeader";
-import Logo from "../../../assets/images/Logo.png";
+import Logo from "../../assets/images/Logo.png";
 import { Link, NavLink } from "react-router-dom";
+import ProductProvider from "../../context/ProductProvider";
+import { useDebounce } from "../../hooks/UseDebounce";
 const Header = () => {
+  const { test } = useContext(ProductProvider);
+  const [Search, setSearch] = useState();
+  const debounceSearcher = useDebounce(Search);
   const [isSmallNow, setIsSmallNow] = useState(false);
   const [dropdownLink, setDropdownLink] = useState(false);
-  console.log(isSmallNow);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 580) {
@@ -22,6 +26,7 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <div className={Hstyles.Header}>
       <TopHeader />
@@ -31,16 +36,28 @@ const Header = () => {
             <img src={Logo} alt="Logo" />
           </Link>
           <div className={Hstyles.searchBox}>
-            <input type="text" placeholder="Search here" />
+            <input
+              type="text"
+              value={Search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search here"
+            />
             <button>Search</button>
+            {test
+              ?.filter((item) => {
+                return debounceSearcher == ""
+                  ? item
+                  : item.title.includes(debounceSearcher);
+              })
+              .map((data) => console.log())}
           </div>
           <div className={Hstyles.wishAndBasket}>
             <div>
-              <i class="fa-regular fa-heart"></i>
+              <i className="fa-regular fa-heart"></i>
               <span>Your Wishlist</span>
             </div>
             <div>
-              <i class="fa-solid fa-cart-shopping"></i>
+              <i className="fa-solid fa-cart-shopping"></i>
               <span>Your Cart</span>
             </div>
           </div>
