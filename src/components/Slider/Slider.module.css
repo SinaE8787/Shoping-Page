@@ -49,8 +49,3 @@
     border-top: 2px solid black;
     border-right: 2px solid black;
   }
-  @media (max-width : 500px){
-    .slider{
-        display: none;
-    }
-}

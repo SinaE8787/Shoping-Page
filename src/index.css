@@ -19,6 +19,11 @@
   border-bottom: 2px solid rgb(253, 18, 18);
   text-shadow: 0 0 1px rgb(196, 0, 0);
 }
+@media (max-width : 1000px){
+.allFather{
+  height: 100%;
+}
+}
 @media (max-width : 580px){
   .active{
     border-bottom: none;

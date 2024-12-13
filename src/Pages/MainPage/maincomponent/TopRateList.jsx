@@ -5,10 +5,18 @@ import Carts from "../../../components/Carts/Carts";
 const TopRateList = () => {
   const { Tops } = useContext(ProductProvider);
   const [showcart, setShowCart] = useState(0);
+  const [cartVisibel, setCartVisibel] = useState(4);
+  window.addEventListener("resize", () => {
+    if (window.innerWidth < 500) {
+      setCartVisibel(2);
+    } else if (window.innerWidth < 950) {
+      setCartVisibel(3);
+    }
+  });
   const nextCart = () => {
-    if (showcart < Tops.length - 4) {
+    if (showcart < Tops.length - cartVisibel) {
       setShowCart(showcart + 1);
-    } else if (showcart === 6) {
+    } else if (showcart === Tops.length - cartVisibel) {
       setShowCart(0);
     }
   };
@@ -17,7 +25,6 @@ const TopRateList = () => {
       setShowCart(showcart - 1);
     }
   };
-  console.log(showcart);
   return (
     <div className={Mstyle.TopRated}>
       <div className={Mstyle.title}>
@@ -38,7 +45,7 @@ const TopRateList = () => {
         }}
       >
         {Tops?.map((data) => (
-          <Carts {...data} />
+          <Carts key={data.id} {...data} />
         ))}
       </div>
     </div>
