@@ -14,6 +14,11 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route
+            path="/products/category/:categoryId"
+            element={<ProductsPage />}
+          />
+          <Route path="/products/search/:query" element={<ProductsPage />} />
           <Route path="/product/:name" element={<SingleProduct />} />
           <Route path="/basket" element={<BasketPage />} />
         </Routes>

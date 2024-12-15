@@ -1,16 +1,39 @@
-import React, { useState, useEffect, useContext } from "react";
-import Hstyles from "./Header.module.css";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDebounce } from "../../hooks/UseDebounce";
 import TopHeader from "./TopHeader";
 import Logo from "../../assets/images/Logo.png";
-import { Link, NavLink } from "react-router-dom";
-import ProductProvider from "../../context/ProductProvider";
-import { useDebounce } from "../../hooks/UseDebounce";
+import Hstyles from "./Header.module.css";
+import axios from "axios";
+import SearchResulte from "./SearchResulte";
 const Header = () => {
-  const { test } = useContext(ProductProvider);
   const [Search, setSearch] = useState();
-  const debounceSearcher = useDebounce(Search);
   const [isSmallNow, setIsSmallNow] = useState(false);
   const [dropdownLink, setDropdownLink] = useState(false);
+  const [searchFoucs, setSearchFoucs] = useState(false);
+  const navigator = useNavigate();
+  const debounceSearcher = useDebounce(Search);
+  const [test, setTest] = useState();
+  const goProducts = () => {
+    if (debounceSearcher !== ("" || undefined)) {
+      navigator(`/products/search/${debounceSearcher}`);
+      setSearch("");
+    } else return alert("pls search someting !");
+  };
+  const searchProducts = async () => {
+    try {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const response = await axios.get(
+        `https://kaaryar-ecom.liara.run/v1/products?search=${debounceSearcher}&page=1&limit=100
+      `,
+        { signal }
+      );
+      setTest(response.data.products);
+      console.log(response.data.products);
+    } finally {
+    }
+  };
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 580) {
@@ -26,6 +49,11 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (debounceSearcher?.length >= 2) {
+      searchProducts();
+    }
+  }, [debounceSearcher]);
 
   return (
     <div className={Hstyles.Header}>
@@ -35,22 +63,27 @@ const Header = () => {
           <Link className={Hstyles.Logo}>
             <img src={Logo} alt="Logo" />
           </Link>
-          <div className={Hstyles.searchBox}>
+          <form className={Hstyles.searchBox}>
             <input
               type="text"
               value={Search}
               onChange={(e) => setSearch(e.target.value)}
+              onClick={() => setSearchFoucs(true)}
               placeholder="Search here"
             />
-            <button>Search</button>
-            {test
-              ?.filter((item) => {
-                return debounceSearcher == ""
-                  ? item
-                  : item.title.includes(debounceSearcher);
-              })
-              .map((data) => console.log())}
-          </div>
+            <button
+              type="button"
+              className={Hstyles.searchBtn}
+              onClick={goProducts}
+            >
+              Search
+            </button>
+            {debounceSearcher && searchFoucs ? (
+              <SearchResulte test={test} />
+            ) : (
+              ""
+            )}
+          </form>
           <div className={Hstyles.wishAndBasket}>
             <div>
               <i className="fa-regular fa-heart"></i>
@@ -78,26 +111,50 @@ const Header = () => {
           <NavLink className={Hstyles.Links} to="/">
             Home
           </NavLink>
-          <NavLink className={Hstyles.Links} to="/vfvd">
-            Hot Deals
-          </NavLink>
-          <NavLink className={Hstyles.Links} to="/cdcsv">
+
+          <NavLink className={Hstyles.Links} to="/products">
             Categories
           </NavLink>
-          <NavLink className={Hstyles.Links} to="/csvsf">
-            Laptops
+          <NavLink
+            className={Hstyles.Links}
+            to="/products/category/6748dfa3c9017c78628d4a8d"
+          >
+            Home & Garden
           </NavLink>
-          <NavLink className={Hstyles.Links} to="/sfvfv">
-            SmartPhone
+          <NavLink
+            className={Hstyles.Links}
+            to="/products/category/6748dfa3c9017c78628d4a93"
+          >
+            Sports
           </NavLink>
-          <NavLink className={Hstyles.Links} to="/w">
-            Cameras
+          <NavLink
+            className={Hstyles.Links}
+            to="/products/category/6748dfa3c9017c78628d4a90"
+          >
+            Books
           </NavLink>
-          <NavLink className={Hstyles.Links} to="/csvfv">
-            Accessories
+          <NavLink
+            className={Hstyles.Links}
+            to="/products/category/6748dfa3c9017c78628d4a87"
+          >
+            Electronics
+          </NavLink>
+          <NavLink
+            className={Hstyles.Links}
+            to="/products/category/6748dfa3c9017c78628d4a8a"
+          >
+            Clothing
           </NavLink>
         </div>
       </div>
+      {searchFoucs ? (
+        <div
+          className={Hstyles.darkGlass}
+          onClick={() => setSearchFoucs((prev) => (prev = !prev))}
+        ></div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
