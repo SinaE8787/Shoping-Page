@@ -21,9 +21,9 @@ const Header = () => {
     } else return alert("pls search someting !");
   };
   const searchProducts = async () => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     try {
-      const controller = new AbortController();
-      const signal = controller.signal;
       const response = await axios.get(
         `https://kaaryar-ecom.liara.run/v1/products?search=${debounceSearcher}&page=1&limit=100
       `,
@@ -50,6 +50,7 @@ const Header = () => {
     };
   }, []);
   useEffect(() => {
+    console.log(debounceSearcher);
     if (debounceSearcher?.length >= 2) {
       searchProducts();
     }

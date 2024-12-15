@@ -10,10 +10,9 @@ const SearchResulte = ({ test }) => {
   const currentProducts = test?.slice(lastPage, nextPage);
 
   const paginate = (pageNumber) => setPageNumber(pageNumber);
-  console.log(currentProducts);
   return (
     <div className={styles.SearchResulteContainer}>
-      {currentProducts.length > 1 ? (
+      {currentProducts?.length > 1 ? (
         <ul className={styles.productsList}>
           {currentProducts?.map((product) => (
             <ResulteCarts key={product._id} {...product} />
