@@ -30,7 +30,6 @@ const Header = () => {
         { signal }
       );
       setTest(response.data.products);
-      console.log(response.data.products);
     } finally {
     }
   };
@@ -50,7 +49,6 @@ const Header = () => {
     };
   }, []);
   useEffect(() => {
-    console.log(debounceSearcher);
     if (debounceSearcher?.length >= 2) {
       searchProducts();
     }
