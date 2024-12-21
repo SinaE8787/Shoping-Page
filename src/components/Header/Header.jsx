@@ -18,6 +18,7 @@ const Header = () => {
     if (debounceSearcher !== ("" || undefined)) {
       navigator(`/products/search/${debounceSearcher}`);
       setSearch("");
+      setSearchFoucs(false);
     } else return alert("pls search someting !");
   };
   const searchProducts = async () => {

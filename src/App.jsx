@@ -5,10 +5,12 @@ import MainPage from "./Pages/MainPage/MainPage";
 import ProductsPage from "./Pages/ProductsPage/ProductsPage";
 import SingleProduct from "./Pages/SingleProduct/SingleProduct";
 import BasketPage from "./Pages/BasketPage/BasketPage";
+import Loading from "./components/Loding/Loading";
 
 function App() {
   return (
     <div className="allFather">
+      <Loading />
       <Header />
       <div className="container">
         <Routes>

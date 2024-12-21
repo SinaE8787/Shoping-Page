@@ -3,10 +3,9 @@ import styles from "./SliderRange.module.css";
 import ReactSlider from "react-slider";
 import ProductProvider from "../../../context/ProductProvider";
 import NumberRange from "./NumberRange";
-const MIN = 10;
-const MAX = 1000;
+
 const SliderRange = () => {
-  const { priceLimit, setPriceLimit } = useContext(ProductProvider);
+  const { priceLimit, setPriceLimit, MIN, MAX } = useContext(ProductProvider);
 
   return (
     <div className={styles.sliderRange}>

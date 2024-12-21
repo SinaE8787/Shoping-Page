@@ -4,14 +4,14 @@ import styles from "./SliderRange.module.css";
 
 const NumberRange = ({ arrayNum }) => {
   const [intervalStop, setIntervalStop] = useState(null);
-  const { priceLimit, setPriceLimit } = useContext(ProductProvider);
+  const { priceLimit, setPriceLimit, MIN, MAX } = useContext(ProductProvider);
   const rangeChanger = (minOrMax, operation) => {
     const saveLimit = setInterval(() => {
       setPriceLimit((prevRange) => {
         const newRange = [...prevRange];
-        if (operation === "increment" && newRange[minOrMax] < 1000) {
+        if (operation === "increment" && newRange[minOrMax] < MAX) {
           newRange[minOrMax] += 1;
-        } else if (operation === "decrement" && newRange[minOrMax] > 0) {
+        } else if (operation === "decrement" && newRange[minOrMax] > MIN) {
           newRange[minOrMax] -= 1;
         }
         return newRange;

@@ -6,6 +6,7 @@
     justify-content: center;
     padding: 4rem 0;
 }
+
 .filterAndProducts{
     width: 60%;
     display: flex;
@@ -29,6 +30,30 @@
     transition-duration: .3s;
 
 }
+.topFilters{
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-left: 2rem;
+}
+.Selectors{
+  width: fit-content;
+  height: 2.2rem;
+  border: none;
+  outline: none;
+  border-radius: .5rem;
+  padding: .5rem;
+  font-size: 1.05rem;
+  background-color: rgba(193, 193, 193, 0.763);
+  box-shadow: 0 0 3px rgb(189, 189, 189);
+  cursor: pointer;
+  transition-duration: .3s;
+ }
+ .Selectors:hover{
+  background-color: rgba(161, 161, 161, 0.763);
+ }
 .setFilterBtn{
     width: 100%;
     height: 3rem;
@@ -127,6 +152,13 @@
         flex-direction: column;
         align-items: center;
         gap: 3rem;
+      }
+      .topFilters{
+        padding-left: .5rem;
+      }
+      .Selectors{
+        height: 2rem;
+        font-size: 1rem;
       }
       .filters{
         width: 60%;

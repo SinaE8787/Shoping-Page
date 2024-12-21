@@ -4,9 +4,13 @@ import axios from "axios";
 import ProductProvider from "./ProductProvider";
 import { useDebounce } from "../hooks/useDebounce";
 const BASE_URL = "https://kaaryar-ecom.liara.run/v1/products";
-
+const MIN = 10;
+const MAX = 1000;
+const DEFAULT_SORT_BY = "default";
+const HIGH_TO_LOW_SORT_BY = "highToLow";
+const LOW_TO_HIGH_SORT_BY = "lowToHigh";
 const GetProducts = ({ children }) => {
-  ////////////////\\\\\\\\\\\\\\\\\\\
+  ////////////////get categorys an topreted\\\\\\\\\\\\\\\\\\\
   const [Tops, setTops] = useState(null);
   const [categoryList, setCategoryList] = useState([]);
   const getTopRated = async () => {
@@ -24,16 +28,12 @@ const GetProducts = ({ children }) => {
     getCategorys();
   }, []);
 
-  ///////////////////////\\\\\\\\\\\\\\\\\\\\\\\
+  ///////////////////////request to api for defrent location\\\\\\\\\\\\\\\\\\\\\\\
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [filtersArray, setFlitersArray] = useState([]);
   const [category, setCategory] = useState();
   const [query, setQuery] = useState();
-  const [loading, setLoading] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-
-  //////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -52,24 +52,82 @@ const GetProducts = ({ children }) => {
         setProducts(response?.data?.products);
         setFlitersArray(response?.data?.products);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          hideLoading();
+        }, 750);
       }
     };
     fetchProducts();
     return () => {
       controller.abort();
     };
-  }, [category, query]);
-  //////////////////////\\\\\\\\\\\\\\\\\\\\\\\
-  const [priceLimit, setPriceLimit] = useState([10, 1000]);
+  }, [category, query, location.pathname]);
+  //////////////////////filters\\\\\\\\\\\\\\\\\\\\\\\
+  const [onFilter, setOnFilter] = useState([]);
+  const [priceLimit, setPriceLimit] = useState([MIN, MAX]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
+  const [useFilterBtn, SetUseFilterBtn] = useState(false);
   const priceLimited = useDebounce(priceLimit);
+  const showBtn = () => SetUseFilterBtn(true);
+  useEffect(() => {
+    setOnFilter(
+      filtersArray.filter((data) => {
+        const categoryFilters =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(data?.category?._id);
+
+        const priceFliter =
+          data?.price >= priceLimited[0] && data?.price <= priceLimited[1];
+
+        return priceFliter & categoryFilters;
+      })
+    );
+  }, [selectedCategories, priceLimited, sortOrder]);
+
+  useEffect(() => {
+    if (sortOrder === LOW_TO_HIGH_SORT_BY) {
+      setOnFilter(onFilter.sort((a, b) => b.price - a.price));
+    } else if (sortOrder === HIGH_TO_LOW_SORT_BY) {
+      setOnFilter(onFilter.sort((a, b) => a.price - b.price));
+    }
+  }, [onFilter]);
+  useEffect(() => {
+    if (products.length === onFilter.length) {
+      SetUseFilterBtn(false);
+    } else if (products.length > 1 && onFilter.length < 1) {
+      SetUseFilterBtn(false);
+    } else {
+      SetUseFilterBtn(true);
+    }
+    console.log(products, onFilter);
+  }, [products, onFilter]);
+  useEffect(() => {
+    setSelectedCategories([]);
+    setSortOrder(DEFAULT_SORT_BY);
+    setPriceLimit([MIN, MAX]);
+  }, [location.pathname]);
+  ///////////////loading\\\\\\\\\\\\\\\
+  const [loading, setLoading] = useState(false);
+  const showLoading = () => setLoading(true);
+  const hideLoading = () => setLoading(false);
+  const loadingProcess = () => {
+    showLoading();
+    setTimeout(() => {
+      hideLoading();
+    }, 1000);
+  };
   return (
     <ProductProvider.Provider
       value={{
+        MIN,
+        MAX,
+        DEFAULT_SORT_BY,
+        HIGH_TO_LOW_SORT_BY,
+        LOW_TO_HIGH_SORT_BY,
         Tops,
         products,
         setProducts,
-        loading,
         setCategory,
         setQuery,
         categoryList,
@@ -78,7 +136,14 @@ const GetProducts = ({ children }) => {
         priceLimit,
         priceLimited,
         setPriceLimit,
-        filtersArray,
+        location,
+        onFilter,
+        sortOrder,
+        setSortOrder,
+        useFilterBtn,
+        loading,
+        loadingProcess,
+        showBtn,
       }}
     >
       {children}

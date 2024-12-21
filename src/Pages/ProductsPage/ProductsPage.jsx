@@ -5,68 +5,56 @@ import Pstyles from "./Products.module.css";
 import Category from "./ProductsComponnet/Category";
 import SliderRange from "./ProductsComponnet/SliderRange";
 import Carts from "../../components/Carts/Carts";
+import SortByFilters from "./ProductsComponnet/SortByFilters";
+const PAGE_NUMBER = 1;
+const MIN_ITEM_PER_PAGE = 6;
+const DEFAULT_ITEM_PER_PAGE = 12;
+const MAX_ITEM_PER_PAGE = 18;
+
 const ProductsPage = () => {
   const {
     products,
     setProducts,
-    loading,
     setCategory,
     setQuery,
-    selectedCategories,
-    priceLimited,
-    filtersArray,
+    location,
+    onFilter,
+    sortOrder,
+    setSortOrder,
+    useFilterBtn,
+    DEFAULT_SORT_BY,
+    HIGH_TO_LOW_SORT_BY,
+    LOW_TO_HIGH_SORT_BY,
+    loadingProcess,
+    showBtn,
   } = useContext(ProductProvider);
   const { categoryId, query } = useParams();
-  const [onFilter, setOnFilter] = useState([]);
-  const [filterBtn, setFilterBtn] = useState(false);
-  const [pageProductNumber, setPageProductNumber] = useState(1);
-  const itemsPerPage = 12;
+  const [pageProductNumber, setPageProductNumber] = useState(PAGE_NUMBER);
+  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEM_PER_PAGE);
+
   useEffect(() => {
     setCategory(categoryId);
     setQuery(query);
   }, [categoryId, query]);
 
-  useEffect(() => {
-    setOnFilter(
-      filtersArray.filter((data) => {
-        const categoryFilters =
-          selectedCategories.length === 0 ||
-          selectedCategories.includes(data.category._id);
-
-        const priceFliter =
-          data.price >= priceLimited[0] && data.price <= priceLimited[1];
-
-        return priceFliter & categoryFilters;
-      })
-    );
-  }, [selectedCategories, priceLimited]);
-  useEffect(() => {
-    if (onFilter?.length < 1 || onFilter?.length === 100) {
-      setFilterBtn(false);
-    } else {
-      setFilterBtn(true);
-    }
-  }, [onFilter]);
-
   const nextPage = pageProductNumber * itemsPerPage;
   const lastPage = nextPage - itemsPerPage;
+  const totalPage = Math.ceil(products.length / itemsPerPage);
   const currentProducts = products.slice(lastPage, nextPage);
-  const totalPages = Math.ceil(products.length / itemsPerPage);
   const pageChanger = (pageNumber) => {
     setPageProductNumber(pageNumber);
   };
-
   return (
     <div className={Pstyles.productPage}>
       <div className={Pstyles.filterAndProducts}>
         <div className={Pstyles.filters}>
-          <Category />
+          {location.pathname === "/products" ? <Category /> : ""}
           <SliderRange />
-          {filterBtn ? (
+          {useFilterBtn ? (
             <button
               onClick={() => {
                 setProducts(onFilter);
-                setFilterBtn(false);
+                loadingProcess();
               }}
               className={Pstyles.setFilterBtn}
             >
@@ -77,7 +65,24 @@ const ProductsPage = () => {
           )}
         </div>
         <div className={Pstyles.Products}>
-          <div className={Pstyles.topFilters}></div>
+          <div className={Pstyles.topFilters}>
+            <SortByFilters
+              stateName={sortOrder}
+              stateChanger={setSortOrder}
+              functionHandel={showBtn}
+              Defualt={DEFAULT_SORT_BY}
+              value2={LOW_TO_HIGH_SORT_BY}
+              value3={HIGH_TO_LOW_SORT_BY}
+            />
+            <SortByFilters
+              stateName={itemsPerPage}
+              stateChanger={setItemsPerPage}
+              functionHandel={loadingProcess}
+              Defualt={DEFAULT_ITEM_PER_PAGE}
+              value2={MIN_ITEM_PER_PAGE}
+              value3={MAX_ITEM_PER_PAGE}
+            />
+          </div>
           <div className={Pstyles.containerProducts}>
             <div className={Pstyles.productsGrid}>
               {currentProducts.map((product) => (
@@ -85,7 +90,7 @@ const ProductsPage = () => {
               ))}
             </div>
             <div className={Pstyles.pagination}>
-              {Array.from({ length: totalPages }, (_, index) => (
+              {Array.from({ length: totalPage }, (_, index) => (
                 <button
                   key={index + 1}
                   className={`${Pstyles.pageButton} ${
