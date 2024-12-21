@@ -86,12 +86,12 @@ const GetProducts = ({ children }) => {
   }, [selectedCategories, priceLimited, sortOrder]);
 
   useEffect(() => {
-    if (sortOrder === LOW_TO_HIGH_SORT_BY) {
-      setOnFilter(onFilter.sort((a, b) => b.price - a.price));
-    } else if (sortOrder === HIGH_TO_LOW_SORT_BY) {
-      setOnFilter(onFilter.sort((a, b) => a.price - b.price));
+    if (sortOrder === HIGH_TO_LOW_SORT_BY) {
+      setProducts(onFilter.sort((a, b) => b.price - a.price));
+    } else if (sortOrder === LOW_TO_HIGH_SORT_BY) {
+      setProducts(onFilter.sort((a, b) => a.price - b.price));
     }
-  }, [onFilter]);
+  }, [sortOrder]);
   useEffect(() => {
     if (products.length === onFilter.length) {
       SetUseFilterBtn(false);
@@ -100,7 +100,6 @@ const GetProducts = ({ children }) => {
     } else {
       SetUseFilterBtn(true);
     }
-    console.log(products, onFilter);
   }, [products, onFilter]);
   useEffect(() => {
     setSelectedCategories([]);
@@ -143,7 +142,6 @@ const GetProducts = ({ children }) => {
         useFilterBtn,
         loading,
         loadingProcess,
-        showBtn,
       }}
     >
       {children}

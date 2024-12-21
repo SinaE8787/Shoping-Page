@@ -69,7 +69,7 @@ const ProductsPage = () => {
             <SortByFilters
               stateName={sortOrder}
               stateChanger={setSortOrder}
-              functionHandel={showBtn}
+              functionHandel={loadingProcess}
               Defualt={DEFAULT_SORT_BY}
               value2={LOW_TO_HIGH_SORT_BY}
               value3={HIGH_TO_LOW_SORT_BY}
