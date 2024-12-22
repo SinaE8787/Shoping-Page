@@ -6,41 +6,82 @@ import Category from "./ProductsComponnet/Category";
 import SliderRange from "./ProductsComponnet/SliderRange";
 import Carts from "../../components/Carts/Carts";
 import SortByFilters from "./ProductsComponnet/SortByFilters";
+import { useDebounce } from "../../hooks/useDebounce";
 const PAGE_NUMBER = 1;
 const MIN_ITEM_PER_PAGE = 6;
 const DEFAULT_ITEM_PER_PAGE = 12;
 const MAX_ITEM_PER_PAGE = 18;
-
+const DEFAULT_SORT_BY = "default";
+const HIGH_TO_LOW_SORT_BY = "highToLow";
+const LOW_TO_HIGH_SORT_BY = "lowToHigh";
 const ProductsPage = () => {
   const {
+    MIN,
+    MAX,
     products,
     setProducts,
     setCategory,
     setQuery,
     location,
-    onFilter,
-    sortOrder,
-    setSortOrder,
-    useFilterBtn,
-    DEFAULT_SORT_BY,
-    HIGH_TO_LOW_SORT_BY,
-    LOW_TO_HIGH_SORT_BY,
     loadingProcess,
-    showBtn,
+    selectedCategories,
+    setSelectedCategories,
+    priceLimit,
+    setPriceLimit,
+    filtersArray,
   } = useContext(ProductProvider);
   const { categoryId, query } = useParams();
   const [pageProductNumber, setPageProductNumber] = useState(PAGE_NUMBER);
   const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEM_PER_PAGE);
-
+  const [onFilter, setOnFilter] = useState([]);
+  const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
+  const [useFilterBtn, SetUseFilterBtn] = useState(false);
+  const priceLimited = useDebounce(priceLimit);
   useEffect(() => {
     setCategory(categoryId);
     setQuery(query);
   }, [categoryId, query]);
 
+  useEffect(() => {
+    setOnFilter(
+      filtersArray?.filter((data) => {
+        const categoryFilters =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(data?.category?._id);
+
+        const priceFliter =
+          data?.price >= priceLimited[0] && data?.price <= priceLimited[1];
+
+        return priceFliter & categoryFilters;
+      })
+    );
+  }, [selectedCategories, priceLimited, sortOrder]);
+
+  useEffect(() => {
+    if (sortOrder === HIGH_TO_LOW_SORT_BY) {
+      setProducts(onFilter.sort((a, b) => b.price - a.price));
+    } else if (sortOrder === LOW_TO_HIGH_SORT_BY) {
+      setProducts(onFilter.sort((a, b) => a.price - b.price));
+    }
+  }, [sortOrder]);
+  useEffect(() => {
+    if (products?.length === onFilter?.length) {
+      SetUseFilterBtn(false);
+    } else if (products?.length > 1 && onFilter?.length < 1) {
+      SetUseFilterBtn(false);
+    } else {
+      SetUseFilterBtn(true);
+    }
+  }, [products, onFilter]);
+  useEffect(() => {
+    setSelectedCategories([]);
+    setSortOrder(DEFAULT_SORT_BY);
+    setPriceLimit([MIN, MAX]);
+  }, [location.pathname]);
   const nextPage = pageProductNumber * itemsPerPage;
   const lastPage = nextPage - itemsPerPage;
-  const totalPage = Math.ceil(products.length / itemsPerPage);
-  const currentProducts = products.slice(lastPage, nextPage);
+  const totalPage = Math.ceil(products?.length / itemsPerPage);
+  const currentProducts = products?.slice(lastPage, nextPage);
   const pageChanger = (pageNumber) => {
     setPageProductNumber(pageNumber);
   };
@@ -85,7 +126,7 @@ const ProductsPage = () => {
           </div>
           <div className={Pstyles.containerProducts}>
             <div className={Pstyles.productsGrid}>
-              {currentProducts.map((product) => (
+              {currentProducts?.map((product) => (
                 <Carts key={product._id} {...product} />
               ))}
             </div>

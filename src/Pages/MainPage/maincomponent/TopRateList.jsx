@@ -3,7 +3,7 @@ import Mstyle from "./TopRate.module.css";
 import ProductProvider from "../../../context/ProductProvider";
 import Carts from "../../../components/Carts/Carts";
 const TopRateList = () => {
-  const { Tops } = useContext(ProductProvider);
+  const { topRateds } = useContext(ProductProvider);
   const [showcart, setShowCart] = useState(0);
   const [cartVisibel, setCartVisibel] = useState(4);
   window.addEventListener("resize", () => {
@@ -14,9 +14,9 @@ const TopRateList = () => {
     }
   });
   const nextCart = () => {
-    if (showcart < Tops.length - cartVisibel) {
+    if (showcart < topRateds?.length - cartVisibel) {
       setShowCart(showcart + 1);
-    } else if (showcart === Tops.length - cartVisibel) {
+    } else if (showcart === topRateds?.length - cartVisibel) {
       setShowCart(0);
     }
   };
@@ -44,7 +44,7 @@ const TopRateList = () => {
           transform: `translateX(-${showcart * (100 / 10)}%)`,
         }}
       >
-        {Tops?.map((data) => (
+        {topRateds?.map((data) => (
           <Carts key={data._id} {...data} />
         ))}
       </div>
