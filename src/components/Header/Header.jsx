@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/UseDebounce";
 import TopHeader from "./TopHeader";
@@ -6,7 +6,9 @@ import Logo from "../../assets/images/Logo.png";
 import Hstyles from "./Header.module.css";
 import axios from "axios";
 import SearchResulte from "./SearchResulte";
+import ProductProvider from "../../context/ProductProvider";
 const Header = () => {
+  const { productSelected } = useContext(ProductProvider);
   const [Search, setSearch] = useState();
   const [isSmallNow, setIsSmallNow] = useState(false);
   const [dropdownLink, setDropdownLink] = useState(false);
@@ -22,9 +24,9 @@ const Header = () => {
     } else return alert("pls search someting !");
   };
   const searchProducts = async () => {
-    const controller = new AbortController();
-    const signal = controller.signal;
     try {
+      const controller = new AbortController();
+      const signal = controller.signal;
       const response = await axios.get(
         `https://kaaryar-ecom.liara.run/v1/products?search=${debounceSearcher}&page=1&limit=100
       `,
@@ -32,6 +34,7 @@ const Header = () => {
       );
       setTest(response.data.products);
     } finally {
+      controller.abort();
     }
   };
   useEffect(() => {
@@ -89,9 +92,14 @@ const Header = () => {
               <i className="fa-regular fa-heart"></i>
               <span>Your Wishlist</span>
             </div>
-            <div>
+            <div className={Hstyles.basket}>
               <i className="fa-solid fa-cart-shopping"></i>
               <span>Your Cart</span>
+              {productSelected ? (
+                <div className={Hstyles.basketCount}>{productSelected}</div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

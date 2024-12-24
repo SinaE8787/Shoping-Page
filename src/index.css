@@ -43,7 +43,7 @@
 .track-1 {
 all: none;
 }
-@media (max-width : 1000px){
+@media (max-width : 870px){
 .allFather{
   height: 100%;
 }

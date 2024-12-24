@@ -13,8 +13,10 @@ const GetProducts = ({ children }) => {
   const [query, setQuery] = useState();
   const [priceLimit, setPriceLimit] = useState([MIN, MAX]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [singlePage, setSinglePage] = useState();
+  const [cartItems, setCartItems] = useState({});
+  const productSelected = Object.values(cartItems).length || 0;
   const location = useLocation();
-
   useEffect(() => {
     getTopRated().then((data) => {
       setTopRateds(data);
@@ -48,6 +50,40 @@ const GetProducts = ({ children }) => {
       hideLoading();
     }, 1000);
   };
+  const findProduct = products?.find((find) => find.name === singlePage);
+
+  const addToCart = (productId, maxQuantity) => {
+    setCartItems((prev) => {
+      const currentQuantity = prev[productId] || 0;
+
+      if (currentQuantity >= maxQuantity) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [productId]: currentQuantity + 1,
+      };
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCartItems((prev) => {
+      const currentQuantity = prev[productId];
+
+      if (currentQuantity <= 1) {
+        const updatedCart = { ...prev };
+        delete updatedCart[productId];
+        return updatedCart;
+      }
+
+      return {
+        ...prev,
+        [productId]: currentQuantity - 1,
+      };
+    });
+  };
+
   return (
     <ProductProvider.Provider
       value={{
@@ -67,6 +103,12 @@ const GetProducts = ({ children }) => {
         loading,
         loadingProcess,
         filtersArray,
+        setSinglePage,
+        findProduct,
+        cartItems,
+        addToCart,
+        removeFromCart,
+        productSelected,
       }}
     >
       {children}

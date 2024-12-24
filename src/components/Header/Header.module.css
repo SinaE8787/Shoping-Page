@@ -120,6 +120,23 @@
 .wishAndBasket div i{
     font-size: 1.2rem;
 }
+.basket{
+    position: relative;
+}
+.basketCount{
+    position: absolute;
+    top: -.5rem;
+    right: 1.8rem;
+    width: 1.1rem !important;
+    height: 1.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    color: white;
+    background-color: rgb(179, 28, 28);
+}
 @media (max-width : 1385px){
     .navSearchbox{
         width: 80%;

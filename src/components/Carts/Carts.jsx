@@ -2,7 +2,8 @@ import styles from "./Carts.module.css";
 import imgDefault from "../../assets/images/default.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-const Carts = ({ name, price, category, images }) => {
+import AddCartBtn from "../AddCartBtn/AddCartBtn";
+const Carts = ({ _id, name, price, category, images, stock }) => {
   const [ShowAddBox, setShowAddBox] = useState(false);
   const roundedPrice = parseInt(price);
   return (
@@ -11,8 +12,8 @@ const Carts = ({ name, price, category, images }) => {
       onMouseEnter={() => setShowAddBox((change) => (change = !change))}
       onMouseLeave={() => setShowAddBox((change) => (change = !change))}
     >
-      <Link className={styles.imgBox}>
-        <img src={images ? images : imgDefault} />
+      <Link to={`/product/${name}`} className={styles.imgBox}>
+        <img src={images ? images[0] : imgDefault} />
       </Link>
       <div className={styles.productDetails}>
         <div className={styles.Category}>{category?.name}</div>
@@ -27,7 +28,7 @@ const Carts = ({ name, price, category, images }) => {
       </div>
       {ShowAddBox ? (
         <div className={styles.AddBox}>
-          <button>Add To Cart</button>
+          <AddCartBtn productId={_id} maxQuantity={stock} />
         </div>
       ) : (
         ""
