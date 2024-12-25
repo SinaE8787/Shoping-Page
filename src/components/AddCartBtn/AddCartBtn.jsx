@@ -1,35 +1,64 @@
 import { useContext } from "react";
 import ProductProvider from "../../context/ProductProvider";
 import styles from "./AddCart.module.css";
-
+const DEFAULT_QUANTITY = 1;
 const AddCartBtn = ({ productId, maxQuantity, setTotalPrice }) => {
-  const { cartItems, addToCart, removeFromCart } = useContext(ProductProvider);
-  const quantity = cartItems[productId] || 0;
-  setTotalPrice ? setTotalPrice(quantity) : "";
+  const { cartItems, setCartItems } = useContext(ProductProvider);
+  const isInCart = cartItems.find((item) => item.id === productId);
+  setTotalPrice ? setTotalPrice(isInCart?.quantity) : "";
+  const addToCart = () => {
+    setCartItems((prevCart) => {
+      const duplicateProduct = prevCart.findIndex(
+        (item) => item.id === productId
+      );
+      if (duplicateProduct !== -1) {
+        const updatedCart = [...prevCart];
+        if (updatedCart[duplicateProduct].quantity <= maxQuantity) {
+          updatedCart[duplicateProduct].quantity += DEFAULT_QUANTITY;
+        }
+        return updatedCart;
+      } else {
+        return [...prevCart, { id: productId, quantity: DEFAULT_QUANTITY }];
+      }
+    });
+  };
+  const removeFromCart = () => {
+    setCartItems((prevCart) => {
+      const duplicateProduct = prevCart.findIndex(
+        (item) => item.id === productId
+      );
+      if (duplicateProduct !== -1) {
+        const updatedCart = [...prevCart];
+        updatedCart[duplicateProduct].quantity -= DEFAULT_QUANTITY;
+        if (updatedCart[duplicateProduct].quantity <= 0) {
+          return updatedCart.filter((item) => item.id !== productId);
+        }
+        return updatedCart;
+      }
+      return prevCart;
+    });
+  };
   return (
     <div className={styles.addCartBtn}>
-      {quantity > 0 ? (
+      {isInCart ? (
         <div className={styles.counter}>
           <button
             className={styles.minusButton}
-            onClick={() => removeFromCart(productId)}
+            onClick={() => removeFromCart()}
           >
             -
           </button>
-          <span className={styles.quantity}>{quantity}</span>
+          <span className={styles.quantity}>{isInCart?.quantity}</span>
           <button
             className={styles.plusButton}
-            onClick={() => addToCart(productId, maxQuantity)}
-            disabled={quantity >= maxQuantity}
+            onClick={() => addToCart()}
+            disabled={isInCart?.quantity >= maxQuantity}
           >
             +
           </button>
         </div>
       ) : (
-        <button
-          className={styles.addBtn}
-          onClick={() => addToCart(productId, maxQuantity)}
-        >
+        <button className={styles.addBtn} onClick={() => addToCart()}>
           Add to Cart
         </button>
       )}

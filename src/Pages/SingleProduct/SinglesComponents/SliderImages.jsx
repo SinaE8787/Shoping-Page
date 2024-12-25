@@ -1,7 +1,7 @@
 import styles from "./SliderImages.module.css";
 
 const SliderImages = ({ images, activeImage, setActiveImage }) => {
-  const imageClickFunction = (index) => {
+  const SliderOnClick = (index) => {
     setActiveImage(index);
   };
   return (
@@ -23,7 +23,7 @@ const SliderImages = ({ images, activeImage, setActiveImage }) => {
             className={`${styles.imageBox} ${
               activeImage === index ? styles.imageBoxActive : ""
             }`}
-            onClick={() => imageClickFunction(index)}
+            onClick={() => SliderOnClick(index)}
           >
             <img
               src={image}

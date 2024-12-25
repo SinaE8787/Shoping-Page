@@ -1,8 +1,8 @@
 import axios from "axios";
-
+const BASE_URL = "https://kaaryar-ecom.liara.run/v1/products";
 export const getTopRated = async () => {
     const TopRated = await axios
-      .get(`https://kaaryar-ecom.liara.run/v1/products/top-rated`);
+      .get(`${BASE_URL}/top-rated`);
       return TopRated?.data
   };
  export const getCategorys = async () => {
@@ -11,7 +11,6 @@ export const getTopRated = async () => {
       return Categorys?.data
   };
  export const fetchProducts = async ({ category , query , signal }) => {
-    const BASE_URL = "https://kaaryar-ecom.liara.run/v1/products";
     const response = await axios.get(BASE_URL, {
       signal,
       params: {
@@ -22,5 +21,17 @@ export const getTopRated = async () => {
       },
     });
     return response?.data;
+  };
+export const searchProducts = async ({ debounceSearcher }) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const response = await axios.get(BASE_URL,{ signal , params :{
+      page: 1,
+      limit: 100,
+      search : debounceSearcher || ""
+    } }
+    );
+    controller.abort();
+    return response?.data?.products
   };
   

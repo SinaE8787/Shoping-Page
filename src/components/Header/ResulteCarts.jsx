@@ -1,9 +1,8 @@
 import styles from "./Header.module.css";
-import defaultimg from "../../assets/images/default.png";
-const ResulteCarts = ({ name }) => {
+const ResulteCarts = ({ images, name }) => {
   return (
     <div className={styles.resulteCart}>
-      <img src={defaultimg} />
+      <img src={images[0]} />
       <div>{name}</div>
     </div>
   );

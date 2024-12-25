@@ -45,7 +45,7 @@ const TopRateList = () => {
         }}
       >
         {topRateds?.map((data) => (
-          <Carts key={data._id} {...data} />
+          <Carts key={data._id} isMainPage={true} {...data} />
         ))}
       </div>
     </div>

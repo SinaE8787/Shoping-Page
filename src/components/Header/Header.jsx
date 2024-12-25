@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/UseDebounce";
-import TopHeader from "./TopHeader";
-import Logo from "../../assets/images/Logo.png";
-import Hstyles from "./Header.module.css";
-import axios from "axios";
-import SearchResulte from "./SearchResulte";
 import ProductProvider from "../../context/ProductProvider";
+import TopHeader from "./TopHeader";
+import Hstyles from "./Header.module.css";
+import SearchResulte from "./SearchResulte";
+import Logo from "../../assets/images/Logo.png";
+import { searchProducts } from "../../api/productsFetch";
 const Header = () => {
   const { productSelected } = useContext(ProductProvider);
   const [Search, setSearch] = useState();
@@ -15,27 +15,13 @@ const Header = () => {
   const [searchFoucs, setSearchFoucs] = useState(false);
   const navigator = useNavigate();
   const debounceSearcher = useDebounce(Search);
-  const [test, setTest] = useState();
+  const [productSearch, setProductSearch] = useState([]);
   const goProducts = () => {
     if (debounceSearcher !== ("" || undefined)) {
       navigator(`/products/search/${debounceSearcher}`);
       setSearch("");
       setSearchFoucs(false);
     } else return alert("pls search someting !");
-  };
-  const searchProducts = async () => {
-    try {
-      const controller = new AbortController();
-      const signal = controller.signal;
-      const response = await axios.get(
-        `https://kaaryar-ecom.liara.run/v1/products?search=${debounceSearcher}&page=1&limit=100
-      `,
-        { signal }
-      );
-      setTest(response.data.products);
-    } finally {
-      controller.abort();
-    }
   };
   useEffect(() => {
     const handleResize = () => {
@@ -56,6 +42,9 @@ const Header = () => {
     if (debounceSearcher?.length >= 2) {
       searchProducts();
     }
+    searchProducts({ debounceSearcher }).then((data) => {
+      setProductSearch(data);
+    });
   }, [debounceSearcher]);
 
   return (
@@ -82,7 +71,7 @@ const Header = () => {
               Search
             </button>
             {debounceSearcher && searchFoucs ? (
-              <SearchResulte test={test} />
+              <SearchResulte test={productSearch} />
             ) : (
               ""
             )}
