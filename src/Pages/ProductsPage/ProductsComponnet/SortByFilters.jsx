@@ -1,13 +1,6 @@
-import Pstyles from "../Products.module.css";
+import Pstyles from '../Products.module.css';
 
-const SortByFilters = ({
-  Defualt,
-  value2,
-  value3,
-  stateName,
-  stateChanger,
-  functionHandel,
-}) => {
+const SortByFilters = ({ Defualt, value2, value3, stateName, stateChanger, functionHandel }) => {
   return (
     <select
       id="stateName"

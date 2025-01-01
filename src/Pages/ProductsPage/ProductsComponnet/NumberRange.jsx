@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import ProductProvider from "../../../context/ProductProvider";
-import styles from "./SliderRange.module.css";
+import React, { useContext, useState } from 'react';
+import ProductProvider from '../../../context/ProductProvider';
+import styles from './SliderRange.module.css';
 
 const NumberRange = ({ arrayNum }) => {
   const [intervalStop, setIntervalStop] = useState(null);
@@ -9,9 +9,9 @@ const NumberRange = ({ arrayNum }) => {
     const saveLimit = setInterval(() => {
       setPriceLimit((prevRange) => {
         const newRange = [...prevRange];
-        if (operation === "increment" && newRange[minOrMax] < MAX) {
+        if (operation === 'increment' && newRange[minOrMax] < MAX) {
           newRange[minOrMax] += 1;
-        } else if (operation === "decrement" && newRange[minOrMax] > MIN) {
+        } else if (operation === 'decrement' && newRange[minOrMax] > MIN) {
           newRange[minOrMax] -= 1;
         }
         return newRange;
@@ -28,14 +28,14 @@ const NumberRange = ({ arrayNum }) => {
       <div className={styles.range}>{priceLimit[arrayNum]}</div>
       <div className={styles.editRange}>
         <span
-          onMouseDown={() => rangeChanger(arrayNum, "increment")}
+          onMouseDown={() => rangeChanger(arrayNum, 'increment')}
           onMouseUp={stopChanger}
           onMouseLeave={stopChanger}
         >
           +
         </span>
         <span
-          onMouseDown={() => rangeChanger(arrayNum, "decrement")}
+          onMouseDown={() => rangeChanger(arrayNum, 'decrement')}
           onMouseUp={stopChanger}
           onMouseLeave={stopChanger}
         >

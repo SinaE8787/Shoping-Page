@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import ProductProvider from "../../context/ProductProvider";
-import styles from "./Loading.module.css";
+import { useContext } from 'react';
+import ProductProvider from '../../context/ProductProvider';
+import styles from './Loading.module.css';
 const Loading = () => {
   const { loading } = useContext(ProductProvider);
   return (

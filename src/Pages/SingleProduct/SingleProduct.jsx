@@ -1,17 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ProductProvider from "../../context/ProductProvider";
-import SliderImages from "./SinglesComponents/SliderImages";
-import AddCartBtn from "../../components/AddCartBtn/AddCartBtn";
-import styles from "./Product.module.css";
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ProductProvider from '../../context/ProductProvider';
+import SliderImages from './SinglesComponents/SliderImages';
+import AddCartBtn from '../../components/AddCartBtn/AddCartBtn';
+import styles from './Product.module.css';
 const SingleProduct = () => {
   const { setSinglePage, findProduct } = useContext(ProductProvider);
   const [activeImage, setActiveImage] = useState(0);
   const [totalPrice, setTotalPrice] = useState();
   const productName = useParams().name;
-  const roundedPrice = parseInt(
-    totalPrice ? totalPrice * findProduct?.price : findProduct?.price
-  );
+  const roundedPrice = parseInt(totalPrice ? totalPrice * findProduct?.price : findProduct?.price);
   useEffect(() => {
     setSinglePage(productName);
   }, []);
@@ -24,11 +22,7 @@ const SingleProduct = () => {
               <img src={findProduct?.images[activeImage]} />
             </div>
             <div className={styles.imageSlider}>
-              <SliderImages
-                images={findProduct?.images}
-                activeImage={activeImage}
-                setActiveImage={setActiveImage}
-              />
+              <SliderImages images={findProduct?.images} activeImage={activeImage} setActiveImage={setActiveImage} />
             </div>
           </div>
           <div className={styles.productDetails}>
@@ -43,16 +37,10 @@ const SingleProduct = () => {
                   <span>{findProduct?.stock}</span> IN STOCK
                 </span>
               </div>
-              <div className={styles.description}>
-                {findProduct?.description}
-              </div>
+              <div className={styles.description}>{findProduct?.description}</div>
             </div>
             <div className={styles.addBox}>
-              <AddCartBtn
-                productId={findProduct?._id}
-                maxQuantity={findProduct?.stock}
-                setTotalPrice={setTotalPrice}
-              />
+              <AddCartBtn productId={findProduct?._id} maxQuantity={findProduct?.stock} setTotalPrice={setTotalPrice} />
             </div>
             <div className={styles.categoryAndShare}>
               <div>

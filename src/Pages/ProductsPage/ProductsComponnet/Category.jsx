@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import styles from "./Category.module.css";
-import ProductProvider from "../../../context/ProductProvider";
+import { useContext } from 'react';
+import styles from './Category.module.css';
+import ProductProvider from '../../../context/ProductProvider';
 const Category = () => {
   const { categoryList, setSelectedCategories } = useContext(ProductProvider);
 
@@ -32,7 +32,7 @@ const Category = () => {
             <div>
               {category?.name}
               <span className={styles.productCount}>
-                {"  "}({category?.productCount})
+                {'  '}({category?.productCount})
               </span>
             </div>
           </div>

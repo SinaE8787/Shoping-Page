@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import Mstyle from "./TopRate.module.css";
-import ProductProvider from "../../../context/ProductProvider";
-import Carts from "../../../components/Carts/Carts";
+import { useContext, useState } from 'react';
+import Mstyle from './TopRate.module.css';
+import ProductProvider from '../../../context/ProductProvider';
+import Carts from '../../../components/Carts/Carts';
 const TopRateList = () => {
   const { topRateds } = useContext(ProductProvider);
   const [showcart, setShowCart] = useState(0);
   const [cartVisibel, setCartVisibel] = useState(4);
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     if (window.innerWidth < 500) {
       setCartVisibel(2);
     } else if (window.innerWidth < 950) {

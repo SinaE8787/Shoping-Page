@@ -1,4 +1,4 @@
-import Hstyles from "./Header.module.css";
+import Hstyles from './Header.module.css';
 const TopHeader = () => {
   return (
     <div className={Hstyles.topHead}>
@@ -11,8 +11,7 @@ const TopHeader = () => {
             <i className="samecolor fa-regular fa-envelope"></i> email@gmail.com
           </span>
           <span>
-            <i className="samecolor fa-solid fa-location-dot"></i> 1734
-            Stonecool
+            <i className="samecolor fa-solid fa-location-dot"></i> 1734 Stonecool
           </span>
         </div>
         <div className={Hstyles.account}>

@@ -1,25 +1,25 @@
-*{
-  font-family: "Roboto", sans-serif;
+* {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-.allFather{
+.allFather {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.container{
+.container {
   width: 100%;
   height: fit-content;
 }
-.samecolor{
+.samecolor {
   color: rgb(155, 0, 0);
 }
-.active{
-  color: rgb(255, 23, 23)!important;
+.active {
+  color: rgb(255, 23, 23) !important;
   border-bottom: 2px solid rgb(253, 18, 18);
   text-shadow: 0 0 1px rgb(196, 0, 0);
 }
@@ -41,15 +41,15 @@
 }
 
 .track-1 {
-all: none;
+  all: none;
 }
-@media (max-width : 870px){
-.allFather{
-  height: 100%;
+@media (max-width: 870px) {
+  .allFather {
+    height: 100%;
+  }
 }
-}
-@media (max-width : 580px){
-  .active{
+@media (max-width: 580px) {
+  .active {
     border-bottom: none;
     text-shadow: 0 0 3px rgb(196, 0, 0);
   }

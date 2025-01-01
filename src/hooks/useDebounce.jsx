@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useDebounce = (value) => {
   const [debounceValue, setDebounceValue] = useState(value);

@@ -1,4 +1,4 @@
-import styles from "./SliderImages.module.css";
+import styles from './SliderImages.module.css';
 
 const SliderImages = ({ images, activeImage, setActiveImage }) => {
   const SliderOnClick = (index) => {
@@ -8,11 +8,7 @@ const SliderImages = ({ images, activeImage, setActiveImage }) => {
     <div className={styles.sliderContainer}>
       <button
         className={`${styles.sliderArrow} ${styles.arrowTop}`}
-        onClick={() =>
-          setActiveImage((prevIndex) =>
-            prevIndex > 0 ? prevIndex - 1 : prevIndex
-          )
-        }
+        onClick={() => setActiveImage((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex))}
       >
         <i className="fa-solid fa-chevron-up"></i>
       </button>
@@ -20,26 +16,16 @@ const SliderImages = ({ images, activeImage, setActiveImage }) => {
         {images?.map((image, index) => (
           <div
             key={index}
-            className={`${styles.imageBox} ${
-              activeImage === index ? styles.imageBoxActive : ""
-            }`}
+            className={`${styles.imageBox} ${activeImage === index ? styles.imageBoxActive : ''}`}
             onClick={() => SliderOnClick(index)}
           >
-            <img
-              src={image}
-              alt={`Product ${index}`}
-              className={styles.sliderImage}
-            />
+            <img src={image} alt={`Product ${index}`} className={styles.sliderImage} />
           </div>
         ))}
       </div>
       <button
         className={`${styles.sliderArrow} ${styles.arrowBottom}`}
-        onClick={() =>
-          setActiveImage((prevIndex) =>
-            prevIndex < images.length - 1 ? prevIndex + 1 : prevIndex
-          )
-        }
+        onClick={() => setActiveImage((prevIndex) => (prevIndex < images.length - 1 ? prevIndex + 1 : prevIndex))}
       >
         <i className="fa-solid fa-chevron-down"></i>
       </button>

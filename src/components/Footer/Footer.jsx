@@ -1,5 +1,5 @@
-import Fstyles from "./Footer.module.css";
-import lists from "./footerData";
+import Fstyles from './Footer.module.css';
+import lists from './footerData';
 const Footer = () => (
   <div className={Fstyles.allFather}>
     <div className={Fstyles.footerLinks}>

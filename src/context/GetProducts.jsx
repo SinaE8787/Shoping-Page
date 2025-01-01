@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import ProductProvider from "./ProductProvider";
-import { fetchProducts, getCategorys, getTopRated } from "../api/productsFetch";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import ProductProvider from './ProductProvider';
+import { fetchProducts, getCategorys, getTopRated } from '../api/productsFetch';
 const MIN = 10;
 const MAX = 1000;
 const GetProducts = ({ children }) => {
@@ -30,9 +30,9 @@ const GetProducts = ({ children }) => {
     showLoading();
     const controller = new AbortController();
     const signal = controller.signal;
-    fetchProducts({ signal, query, category }).then((data) => {
-      setProducts(data?.products);
-      setFlitersArray(data?.products);
+    fetchProducts({ signal, search: query, category }).then((data) => {
+      setProducts(data);
+      setFlitersArray(data);
       setTimeout(() => {
         hideLoading();
       }, 600);
@@ -51,7 +51,6 @@ const GetProducts = ({ children }) => {
     }, 1000);
   };
   const findProduct = products?.find((find) => find.name === singlePage);
-
   return (
     <ProductProvider.Provider
       value={{

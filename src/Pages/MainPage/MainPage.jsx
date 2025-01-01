@@ -1,7 +1,7 @@
-import Carts from "../../components/Carts/Carts";
-import Slider from "../../components/Slider/Slider";
-import Mstyles from "./Main.module.css";
-import TopRateList from "./maincomponent/TopRateList";
+import Carts from '../../components/Carts/Carts';
+import Slider from '../../components/Slider/Slider';
+import Mstyles from './Main.module.css';
+import TopRateList from './maincomponent/TopRateList';
 const MainPage = () => {
   return (
     <div className={Mstyles.Main}>

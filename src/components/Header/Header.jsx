@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useDebounce } from "../../hooks/UseDebounce";
-import ProductProvider from "../../context/ProductProvider";
-import TopHeader from "./TopHeader";
-import Hstyles from "./Header.module.css";
-import SearchResulte from "./SearchResulte";
-import Logo from "../../assets/images/Logo.png";
-import { searchProducts } from "../../api/productsFetch";
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useDebounce } from '../../hooks/UseDebounce';
+import ProductProvider from '../../context/ProductProvider';
+import TopHeader from './TopHeader';
+import Hstyles from './Header.module.css';
+import SearchResulte from './SearchResulte';
+import Logo from '../../assets/images/Logo.png';
+import { fetchProducts } from '../../api/productsFetch';
 const Header = () => {
   const { productSelected } = useContext(ProductProvider);
   const [Search, setSearch] = useState();
@@ -17,11 +17,11 @@ const Header = () => {
   const debounceSearcher = useDebounce(Search);
   const [productSearch, setProductSearch] = useState([]);
   const goProducts = () => {
-    if (debounceSearcher !== ("" || undefined)) {
+    if (debounceSearcher) {
       navigator(`/products/search/${debounceSearcher}`);
-      setSearch("");
+      setSearch('');
       setSearchFoucs(false);
-    } else return alert("pls search someting !");
+    } else return alert('pls search someting !');
   };
   useEffect(() => {
     const handleResize = () => {
@@ -32,19 +32,20 @@ const Header = () => {
         setDropdownLink(false);
       }
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
   useEffect(() => {
-    if (debounceSearcher?.length >= 2) {
-      searchProducts();
-    }
-    searchProducts({ debounceSearcher }).then((data) => {
+    const controller = new AbortController();
+    fetchProducts({ search: debounceSearcher, signal: controller.signal }).then((data) => {
       setProductSearch(data);
     });
+    return () => {
+      controller.abort();
+    };
   }, [debounceSearcher]);
 
   return (
@@ -63,48 +64,27 @@ const Header = () => {
               onClick={() => setSearchFoucs(true)}
               placeholder="Search here"
             />
-            <button
-              type="button"
-              className={Hstyles.searchBtn}
-              onClick={goProducts}
-            >
+            <button type="button" className={Hstyles.searchBtn} onClick={goProducts}>
               Search
             </button>
-            {debounceSearcher && searchFoucs ? (
-              <SearchResulte test={productSearch} />
-            ) : (
-              ""
-            )}
+            {debounceSearcher && searchFoucs ? <SearchResulte test={productSearch} /> : ''}
           </form>
           <div className={Hstyles.wishAndBasket}>
-            <div>
+            <div className={Hstyles.basWish}>
               <i className="fa-regular fa-heart"></i>
               <span>Your Wishlist</span>
             </div>
-            <div className={Hstyles.basket}>
+            <Link to="/basket" className={`${Hstyles.basket} ${Hstyles.basWish}`}>
               <i className="fa-solid fa-cart-shopping"></i>
               <span>Your Cart</span>
-              {productSelected ? (
-                <div className={Hstyles.basketCount}>{productSelected}</div>
-              ) : (
-                ""
-              )}
-            </div>
+              {productSelected ? <div className={Hstyles.basketCount}>{productSelected}</div> : ''}
+            </Link>
           </div>
         </div>
       </div>
       <div className={Hstyles.navLinks}>
-        {isSmallNow ? (
-          <div onClick={() => setDropdownLink((prev) => (prev = !prev))}>
-            onClick
-          </div>
-        ) : (
-          ""
-        )}
-        <div
-          className={Hstyles.PageLinks}
-          style={dropdownLink ? { display: "flex" } : {}}
-        >
+        {isSmallNow ? <div onClick={() => setDropdownLink((prev) => (prev = !prev))}>onClick</div> : ''}
+        <div className={Hstyles.PageLinks} style={dropdownLink ? { display: 'flex' } : {}}>
           <NavLink className={Hstyles.Links} to="/">
             Home
           </NavLink>
@@ -112,45 +92,27 @@ const Header = () => {
           <NavLink className={Hstyles.Links} to="/products">
             Categories
           </NavLink>
-          <NavLink
-            className={Hstyles.Links}
-            to="/products/category/6748dfa3c9017c78628d4a8d"
-          >
+          <NavLink className={Hstyles.Links} to="/products/category/6748dfa3c9017c78628d4a8d">
             Home & Garden
           </NavLink>
-          <NavLink
-            className={Hstyles.Links}
-            to="/products/category/6748dfa3c9017c78628d4a93"
-          >
+          <NavLink className={Hstyles.Links} to="/products/category/6748dfa3c9017c78628d4a93">
             Sports
           </NavLink>
-          <NavLink
-            className={Hstyles.Links}
-            to="/products/category/6748dfa3c9017c78628d4a90"
-          >
+          <NavLink className={Hstyles.Links} to="/products/category/6748dfa3c9017c78628d4a90">
             Books
           </NavLink>
-          <NavLink
-            className={Hstyles.Links}
-            to="/products/category/6748dfa3c9017c78628d4a87"
-          >
+          <NavLink className={Hstyles.Links} to="/products/category/6748dfa3c9017c78628d4a87">
             Electronics
           </NavLink>
-          <NavLink
-            className={Hstyles.Links}
-            to="/products/category/6748dfa3c9017c78628d4a8a"
-          >
+          <NavLink className={Hstyles.Links} to="/products/category/6748dfa3c9017c78628d4a8a">
             Clothing
           </NavLink>
         </div>
       </div>
       {searchFoucs ? (
-        <div
-          className={Hstyles.darkGlass}
-          onClick={() => setSearchFoucs((prev) => (prev = !prev))}
-        ></div>
+        <div className={Hstyles.darkGlass} onClick={() => setSearchFoucs((prev) => (prev = !prev))}></div>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

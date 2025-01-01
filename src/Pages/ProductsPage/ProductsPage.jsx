@@ -1,19 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ProductProvider from "../../context/ProductProvider";
-import Pstyles from "./Products.module.css";
-import Category from "./ProductsComponnet/Category";
-import SliderRange from "./ProductsComponnet/SliderRange";
-import Carts from "../../components/Carts/Carts";
-import SortByFilters from "./ProductsComponnet/SortByFilters";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ProductProvider from '../../context/ProductProvider';
+import Pstyles from './Products.module.css';
+import Category from './ProductsComponnet/Category';
+import SliderRange from './ProductsComponnet/SliderRange';
+import Carts from '../../components/Carts/Carts';
+import SortByFilters from './ProductsComponnet/SortByFilters';
+import { useDebounce } from '../../hooks/useDebounce';
 const PAGE_NUMBER = 1;
 const MIN_ITEM_PER_PAGE = 6;
 const DEFAULT_ITEM_PER_PAGE = 12;
 const MAX_ITEM_PER_PAGE = 18;
-const DEFAULT_SORT_BY = "default";
-const HIGH_TO_LOW_SORT_BY = "highToLow";
-const LOW_TO_HIGH_SORT_BY = "lowToHigh";
+const DEFAULT_SORT_BY = 'default';
+const HIGH_TO_LOW_SORT_BY = 'highToLow';
+const LOW_TO_HIGH_SORT_BY = 'lowToHigh';
 const ProductsPage = () => {
   const {
     MIN,
@@ -45,15 +45,12 @@ const ProductsPage = () => {
   useEffect(() => {
     setOnFilter(
       filtersArray?.filter((data) => {
-        const categoryFilters =
-          selectedCategories.length === 0 ||
-          selectedCategories.includes(data?.category?._id);
+        const categoryFilters = selectedCategories.length === 0 || selectedCategories.includes(data?.category?._id);
 
-        const priceFliter =
-          data?.price >= priceLimited[0] && data?.price <= priceLimited[1];
+        const priceFliter = data?.price >= priceLimited[0] && data?.price <= priceLimited[1];
 
         return priceFliter & categoryFilters;
-      })
+      }),
     );
   }, [selectedCategories, priceLimited, sortOrder]);
 
@@ -89,7 +86,7 @@ const ProductsPage = () => {
     <div className={Pstyles.productPage}>
       <div className={Pstyles.filterAndProducts}>
         <div className={Pstyles.filters}>
-          {location.pathname === "/products" ? <Category /> : ""}
+          {location.pathname === '/products' ? <Category /> : ''}
           <SliderRange />
           {useFilterBtn ? (
             <button
@@ -102,7 +99,7 @@ const ProductsPage = () => {
               Set Filters
             </button>
           ) : (
-            ""
+            ''
           )}
         </div>
         <div className={Pstyles.Products}>
@@ -134,9 +131,7 @@ const ProductsPage = () => {
               {Array.from({ length: totalPage }, (_, index) => (
                 <button
                   key={index + 1}
-                  className={`${Pstyles.pageButton} ${
-                    pageProductNumber === index + 1 ? Pstyles.active : ""
-                  }`}
+                  className={`${Pstyles.pageButton} ${pageProductNumber === index + 1 ? Pstyles.active : ''}`}
                   onClick={() => pageChanger(index + 1)}
                 >
                   {index + 1}

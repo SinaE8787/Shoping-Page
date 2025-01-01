@@ -1,4 +1,4 @@
-import styles from "./Header.module.css";
+import styles from './Header.module.css';
 const ResulteCarts = ({ images, name }) => {
   return (
     <div className={styles.resulteCart}>

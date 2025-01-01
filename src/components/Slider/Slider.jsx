@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import styles from "./Slider.module.css";
-import DataSlide from "./DataSlide";
+import { useEffect, useState } from 'react';
+import styles from './Slider.module.css';
+import DataSlide from './DataSlide';
 const Slider = () => {
   const [newSlide, setNewSlide] = useState(0);
   const NextSlide = () => {
@@ -19,9 +19,7 @@ const Slider = () => {
   };
   useEffect(() => {
     const interval = setInterval(() => {
-      setNewSlide((nextSlide) =>
-        nextSlide === DataSlide.length - 1 ? 0 : nextSlide + 1
-      );
+      setNewSlide((nextSlide) => (nextSlide === DataSlide.length - 1 ? 0 : nextSlide + 1));
     }, 10000);
 
     return () => clearInterval(interval);
@@ -29,12 +27,7 @@ const Slider = () => {
   return (
     <div className={styles.slider}>
       {DataSlide.map((data, index) => (
-        <div
-          key={index}
-          className={`${styles.slide} ${
-            index === newSlide ? styles.active : ""
-          }`}
-        >
+        <div key={index} className={`${styles.slide} ${index === newSlide ? styles.active : ''}`}>
           <img src={data.img} />
         </div>
       ))}

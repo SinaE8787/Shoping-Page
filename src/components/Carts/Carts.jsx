@@ -1,8 +1,8 @@
-import styles from "./Carts.module.css";
-import imgDefault from "../../assets/images/default.png";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import AddCartBtn from "../AddCartBtn/AddCartBtn";
+import styles from './Carts.module.css';
+import imgDefault from '../../assets/images/default.png';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import AddCartBtn from '../AddCartBtn/AddCartBtn';
 const Carts = ({ _id, name, price, category, images, stock }) => {
   const [ShowAddBox, setShowAddBox] = useState(false);
   const roundedPrice = parseInt(price);
@@ -28,10 +28,10 @@ const Carts = ({ _id, name, price, category, images, stock }) => {
       </div>
       {ShowAddBox ? (
         <div className={styles.AddBox}>
-          <AddCartBtn productId={_id} maxQuantity={stock} />
+          <AddCartBtn productId={_id} productName={name} productImg={images[0]} maxQuantity={stock} />
         </div>
       ) : (
-        ""
+        ''
       )}
     </div>
   );
