@@ -124,13 +124,13 @@
   }
 }
 @media (max-width: 611px) {
-  .Cart {
+  .notInHome {
     width: 90%;
     height: 20rem;
   }
 }
 @media (max-width: 500px) {
-  .Cart {
+  .notInHome {
     width: 90%;
     height: 16rem;
     padding: 0.4rem 0.5rem;

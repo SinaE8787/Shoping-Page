@@ -3,12 +3,12 @@ import imgDefault from '../../assets/images/default.png';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import AddCartBtn from '../AddCartBtn/AddCartBtn';
-const Carts = ({ _id, name, price, category, images, description, stock }) => {
+const Carts = ({ _id, name, price, category, images, description, stock, isMainPage }) => {
   const [ShowAddBox, setShowAddBox] = useState(false);
   const roundedPrice = parseInt(price);
   return (
     <div
-      className={styles.Cart}
+      className={`${styles.Cart} ${!isMainPage ? styles.notInHome : ''}`}
       onMouseEnter={() => setShowAddBox((change) => (change = !change))}
       onMouseLeave={() => setShowAddBox((change) => (change = !change))}
     >

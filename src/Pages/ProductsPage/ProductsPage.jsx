@@ -40,6 +40,7 @@ const ProductsPage = () => {
   useEffect(() => {
     setCategory(categoryId);
     setQuery(query);
+    setSortOrder(DEFAULT_SORT_BY);
   }, [categoryId, query]);
 
   useEffect(() => {

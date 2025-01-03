@@ -26,6 +26,7 @@ const GetProducts = ({ children }) => {
     telephone: '',
   });
   const productSelected = cartItems.length || 0;
+
   const location = useLocation();
   useEffect(() => {
     getTopRated().then((data) => {
@@ -47,6 +48,7 @@ const GetProducts = ({ children }) => {
         hideLoading();
       }, 600);
     });
+
     return () => {
       controller.abort();
     };
