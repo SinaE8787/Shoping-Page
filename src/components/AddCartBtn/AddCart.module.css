@@ -63,6 +63,15 @@
 }
 @media (max-width: 500px) {
   .addCartBtn {
-    width: 70%;
+    width: 100%;
   }
+  .minusButton,
+.plusButton{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.quantity{
+  font-size: .8rem;
+  margin: 0 .4rem;
+}
 }

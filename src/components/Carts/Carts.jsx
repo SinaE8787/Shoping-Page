@@ -3,7 +3,7 @@ import imgDefault from '../../assets/images/default.png';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import AddCartBtn from '../AddCartBtn/AddCartBtn';
-const Carts = ({ _id, name, price, category, images, stock }) => {
+const Carts = ({ _id, name, price, category, images, description, stock }) => {
   const [ShowAddBox, setShowAddBox] = useState(false);
   const roundedPrice = parseInt(price);
   return (
@@ -28,7 +28,15 @@ const Carts = ({ _id, name, price, category, images, stock }) => {
       </div>
       {ShowAddBox ? (
         <div className={styles.AddBox}>
-          <AddCartBtn productId={_id} productName={name} productImg={images[0]} maxQuantity={stock} />
+          <AddCartBtn
+            productId={_id}
+            name={name}
+            img={images[0]}
+            category={category?.name}
+            descriptin={description}
+            price={roundedPrice}
+            maxQuantity={stock}
+          />
         </div>
       ) : (
         ''

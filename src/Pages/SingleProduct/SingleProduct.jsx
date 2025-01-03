@@ -40,7 +40,16 @@ const SingleProduct = () => {
               <div className={styles.description}>{findProduct?.description}</div>
             </div>
             <div className={styles.addBox}>
-              <AddCartBtn productId={findProduct?._id} maxQuantity={findProduct?.stock} setTotalPrice={setTotalPrice} />
+              <AddCartBtn
+                productId={findProduct?._id}
+                name={findProduct?.name}
+                img={findProduct?.images[0]}
+                category={findProduct?.category?.name}
+                descriptin={findProduct?.description}
+                price={roundedPrice}
+                maxQuantity={findProduct?.stock}
+                setTotalPrice={setTotalPrice}
+              />
             </div>
             <div className={styles.categoryAndShare}>
               <div>

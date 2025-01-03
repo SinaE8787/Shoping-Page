@@ -1,13 +1,14 @@
 .form {
     width: 100%;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 1.25rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    transition-duration: .3s;
   }
   .form h2{
     font-weight: 600;
@@ -33,3 +34,30 @@
     border-color: rgb(232, 11, 11);
     box-shadow: 0 0 10px rgb(154, 32, 32);
   }
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  @media (max-width: 1400px) {
+      .form{
+        max-width: 600px;
+      }
+  }
+  @media (max-width: 1000px) {
+    .form{
+      max-width: 700px;
+      gap: .8rem;
+      padding: .9rem;
+    }
+    .form h2{
+      font-weight: 500;
+      margin: 0 ;
+      font-size: 1.2rem;
+    }
+    .form input{
+      height: 2.2rem;
+      padding: .3rem .6rem;
+    }
+}
+  

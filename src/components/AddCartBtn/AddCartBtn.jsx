@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import ProductProvider from '../../context/ProductProvider';
 import styles from './AddCart.module.css';
 const DEFAULT_QUANTITY = 1;
-const AddCartBtn = ({ productId, productName, productImg, maxQuantity, setTotalPrice }) => {
+const AddCartBtn = ({ productId, name, img, category, price, descriptin, maxQuantity, setTotalPrice }) => {
   const { cartItems, setCartItems } = useContext(ProductProvider);
   const isInCart = cartItems.find((item) => item.id === productId);
   setTotalPrice ? setTotalPrice(isInCart?.quantity) : '';
@@ -16,7 +16,19 @@ const AddCartBtn = ({ productId, productName, productImg, maxQuantity, setTotalP
         }
         return updatedCart;
       } else {
-        return [...prevCart, { id: productId, quantity: DEFAULT_QUANTITY, name: productName, img: productImg }];
+        return [
+          ...prevCart,
+          {
+            id: productId,
+            quantity: DEFAULT_QUANTITY,
+            name: name,
+            img: img,
+            category: category,
+            price: price,
+            description: descriptin,
+            maxQuantity: maxQuantity,
+          },
+        ];
       }
     });
   };

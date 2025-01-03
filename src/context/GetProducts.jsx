@@ -15,6 +15,16 @@ const GetProducts = ({ children }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [singlePage, setSinglePage] = useState();
   const [cartItems, setCartItems] = useState([]);
+  const [formDataError, setFormDataError] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    city: '',
+    country: '',
+    telephone: '',
+  });
   const productSelected = cartItems.length || 0;
   const location = useLocation();
   useEffect(() => {
@@ -75,6 +85,10 @@ const GetProducts = ({ children }) => {
         productSelected,
         cartItems,
         setCartItems,
+        formDataError,
+        setFormDataError,
+        formData,
+        setFormData,
       }}
     >
       {children}
