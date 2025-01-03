@@ -14,7 +14,10 @@ const GetProducts = ({ children }) => {
   const [priceLimit, setPriceLimit] = useState([MIN, MAX]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [singlePage, setSinglePage] = useState();
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('cartItems');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
   const [formDataError, setFormDataError] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
@@ -63,6 +66,9 @@ const GetProducts = ({ children }) => {
     }, 1000);
   };
   const findProduct = products?.find((find) => find.name === singlePage);
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
   return (
     <ProductProvider.Provider
       value={{

@@ -38,11 +38,13 @@ const ProductsPage = () => {
   const [useFilterBtn, SetUseFilterBtn] = useState(false);
   const priceLimited = useDebounce(priceLimit);
   useEffect(() => {
+    setCategory('');
+  }, []);
+  useEffect(() => {
     setCategory(categoryId);
     setQuery(query);
     setSortOrder(DEFAULT_SORT_BY);
   }, [categoryId, query]);
-
   useEffect(() => {
     setOnFilter(
       filtersArray?.filter((data) => {
