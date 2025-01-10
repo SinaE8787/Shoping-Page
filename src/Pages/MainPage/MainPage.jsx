@@ -1,4 +1,3 @@
-import Carts from '../../components/Carts/Carts';
 import Slider from '../../components/Slider/Slider';
 import Mstyles from './Main.module.css';
 import TopRateList from './maincomponent/TopRateList';

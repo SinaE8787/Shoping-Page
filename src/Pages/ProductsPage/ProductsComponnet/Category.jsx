@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import styles from './Category.module.css';
 import ProductProvider from '../../../context/ProductProvider';
+import styles from './Category.module.css';
+
 const Category = () => {
   const { categoryList, setSelectedCategories } = useContext(ProductProvider);
 

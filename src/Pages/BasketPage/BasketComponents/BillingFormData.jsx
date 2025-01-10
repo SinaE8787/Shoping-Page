@@ -1,5 +1,4 @@
-import { useContext, useState } from 'react';
-
+import { useContext } from 'react';
 import styles from './FormData.module.css';
 import ProductProvider from '../../../context/ProductProvider';
 

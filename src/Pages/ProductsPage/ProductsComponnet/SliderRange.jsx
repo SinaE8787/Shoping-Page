@@ -14,7 +14,7 @@ const SliderRange = () => {
         <ReactSlider className="rangeSlider" value={priceLimit} onChange={setPriceLimit} min={MIN} max={MAX} />
       </div>
       <div className={styles.priceMinMax}>
-        <NumberRange arrayNum={0} /> - <NumberRange arrayNum={1} />
+        <NumberRange arrayIndex={0} /> - <NumberRange arrayIndex={1} />
       </div>
     </div>
   );

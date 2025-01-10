@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import ProductProvider from '../../../context/ProductProvider';
 import styles from './SliderRange.module.css';
 
-const NumberRange = ({ arrayNum }) => {
+const NumberRange = ({ arrayIndex }) => {
   const [intervalStop, setIntervalStop] = useState(null);
   const { priceLimit, setPriceLimit, MIN, MAX } = useContext(ProductProvider);
   const rangeChanger = (minOrMax, operation) => {
@@ -25,17 +25,17 @@ const NumberRange = ({ arrayNum }) => {
   };
   return (
     <div className={styles.showRange}>
-      <div className={styles.range}>{priceLimit[arrayNum]}</div>
+      <div className={styles.range}>{priceLimit[arrayIndex]}</div>
       <div className={styles.editRange}>
         <span
-          onMouseDown={() => rangeChanger(arrayNum, 'increment')}
+          onMouseDown={() => rangeChanger(arrayIndex, 'increment')}
           onMouseUp={stopChanger}
           onMouseLeave={stopChanger}
         >
           +
         </span>
         <span
-          onMouseDown={() => rangeChanger(arrayNum, 'decrement')}
+          onMouseDown={() => rangeChanger(arrayIndex, 'decrement')}
           onMouseUp={stopChanger}
           onMouseLeave={stopChanger}
         >

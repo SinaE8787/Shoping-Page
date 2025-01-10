@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductProvider from './ProductProvider';
 import { fetchProducts, getCategorys, getTopRated } from '../api/productsFetch';
+import ProductProvider from './ProductProvider';
+
 const MIN = 10;
 const MAX = 1000;
 const GetProducts = ({ children }) => {
@@ -29,8 +30,8 @@ const GetProducts = ({ children }) => {
     telephone: '',
   });
   const productSelected = cartItems.length || 0;
-
   const location = useLocation();
+
   useEffect(() => {
     getTopRated().then((data) => {
       setTopRateds(data);
@@ -65,7 +66,9 @@ const GetProducts = ({ children }) => {
       hideLoading();
     }, 1000);
   };
+
   const findProduct = products?.find((find) => find.name === singlePage);
+
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);

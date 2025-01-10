@@ -1,7 +1,7 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Carts.module.css';
 import imgDefault from '../../assets/images/default.png';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import AddCartBtn from '../AddCartBtn/AddCartBtn';
 const Carts = ({ _id, name, price, category, images, description, stock, isMainPage }) => {
   const [ShowAddBox, setShowAddBox] = useState(false);

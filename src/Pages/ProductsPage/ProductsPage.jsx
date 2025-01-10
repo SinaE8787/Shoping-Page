@@ -36,15 +36,23 @@ const ProductsPage = () => {
   const [onFilter, setOnFilter] = useState([]);
   const [sortOrder, setSortOrder] = useState(DEFAULT_SORT_BY);
   const [useFilterBtn, SetUseFilterBtn] = useState(false);
+
   const priceLimited = useDebounce(priceLimit);
+  const nextPage = pageProductNumber * itemsPerPage;
+  const lastPage = nextPage - itemsPerPage;
+  const totalPage = Math.ceil(products?.length / itemsPerPage);
+  const currentProducts = products?.slice(lastPage, nextPage);
+  console.log(totalPage);
   useEffect(() => {
     setCategory('');
   }, []);
+
   useEffect(() => {
     setCategory(categoryId);
     setQuery(query);
     setSortOrder(DEFAULT_SORT_BY);
   }, [categoryId, query]);
+
   useEffect(() => {
     setOnFilter(
       filtersArray?.filter((data) => {
@@ -64,6 +72,7 @@ const ProductsPage = () => {
       setProducts(onFilter.sort((a, b) => a.price - b.price));
     }
   }, [sortOrder]);
+
   useEffect(() => {
     if (products?.length === onFilter?.length) {
       SetUseFilterBtn(false);
@@ -73,17 +82,16 @@ const ProductsPage = () => {
       SetUseFilterBtn(true);
     }
   }, [products, onFilter]);
+
   useEffect(() => {
     setSelectedCategories([]);
     setSortOrder(DEFAULT_SORT_BY);
     setPriceLimit([MIN, MAX]);
   }, [location.pathname]);
-  const nextPage = pageProductNumber * itemsPerPage;
-  const lastPage = nextPage - itemsPerPage;
-  const totalPage = Math.ceil(products?.length / itemsPerPage);
-  const currentProducts = products?.slice(lastPage, nextPage);
+
   const pageChanger = (pageNumber) => {
     setPageProductNumber(pageNumber);
+    loadingProcess();
   };
   return (
     <div className={Pstyles.productPage}>
@@ -130,16 +138,27 @@ const ProductsPage = () => {
                 <Carts key={product._id} {...product} />
               ))}
             </div>
-            <div className={Pstyles.pagination}>
-              {Array.from({ length: totalPage }, (_, index) => (
-                <button
-                  key={index + 1}
-                  className={`${Pstyles.pageButton} ${pageProductNumber === index + 1 ? Pstyles.active : ''}`}
-                  onClick={() => pageChanger(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
+            <div className={Pstyles.paginationCounter}>
+              <div>
+                {pageProductNumber} of {totalPage}
+              </div>
+              <div className={Pstyles.pagination}>
+                {pageProductNumber > 1 ? (
+                  <button className={Pstyles.pageButton} onClick={() => pageChanger(pageProductNumber - 1)}>
+                    <i className="fa-solid fa-chevron-left"></i>
+                  </button>
+                ) : (
+                  ''
+                )}
+                <button className={`${Pstyles.pageButton} ${Pstyles.active}`}>{pageProductNumber}</button>
+                {pageProductNumber === totalPage ? (
+                  ''
+                ) : (
+                  <button className={Pstyles.pageButton} onClick={() => pageChanger(pageProductNumber + 1)}>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>

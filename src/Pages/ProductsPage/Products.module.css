@@ -123,6 +123,17 @@
   color: #fff;
   border-color: #c10000;
 }
+.paginationCounter{
+  width: 100%;
+  padding: 0 3rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition-duration: .3s;
+}
+.paginationCounter div:first-child{
+ color: gray;
+}
 @media (max-width: 1400px) {
   .filterAndProducts {
     width: 100%;
@@ -181,6 +192,9 @@
   .filters {
     width: 65%;
     align-items: center;
+  }
+  .paginationCounter{
+    padding: 0 1rem;
   }
 }
 @media (max-width: 680px) {

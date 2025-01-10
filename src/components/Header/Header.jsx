@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/UseDebounce';
+import { fetchProducts } from '../../api/productsFetch';
 import ProductProvider from '../../context/ProductProvider';
 import TopHeader from './TopHeader';
-import Hstyles from './Header.module.css';
 import SearchResulte from './SearchResulte';
+import Hstyles from './Header.module.css';
 import Logo from '../../assets/images/Logo.png';
-import { fetchProducts } from '../../api/productsFetch';
 const Header = () => {
   const { productSelected } = useContext(ProductProvider);
-  const [Search, setSearch] = useState();
+  const [search, setSearch] = useState('');
   const [isSmallNow, setIsSmallNow] = useState(false);
   const [dropdownLink, setDropdownLink] = useState(false);
   const [searchFoucs, setSearchFoucs] = useState(false);
-  const navigator = useNavigate();
-  const debounceSearcher = useDebounce(Search);
   const [productSearch, setProductSearch] = useState([]);
+  const navigator = useNavigate();
+  const debounceSearcher = useDebounce(search);
   const goProducts = () => {
     if (debounceSearcher) {
       navigator(`/products/search/${debounceSearcher}`);
@@ -59,13 +59,13 @@ const Header = () => {
           <form className={Hstyles.searchBox}>
             <input
               type="text"
-              value={Search}
+              value={search}
               onChange={(e) => setSearch(e.target.value)}
               onClick={() => setSearchFoucs(true)}
               placeholder="Search here"
             />
             <button type="button" className={Hstyles.searchBtn} onClick={goProducts}>
-              Search
+              <i className="fa-solid fa-magnifying-glass"></i>
             </button>
             {debounceSearcher && searchFoucs ? <SearchResulte test={productSearch} /> : ''}
           </form>
@@ -83,7 +83,13 @@ const Header = () => {
         </div>
       </div>
       <div className={Hstyles.navLinks}>
-        {isSmallNow ? <div onClick={() => setDropdownLink((prev) => (prev = !prev))}>onClick</div> : ''}
+        {isSmallNow ? (
+          <div className={Hstyles.openLinksMenu} onClick={() => setDropdownLink((prev) => (prev = !prev))}>
+            onClick
+          </div>
+        ) : (
+          ''
+        )}
         <div className={Hstyles.PageLinks} style={dropdownLink ? { display: 'flex' } : {}}>
           <NavLink className={Hstyles.Links} to="/">
             Home

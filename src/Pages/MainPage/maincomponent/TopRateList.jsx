@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
-import Mstyle from './TopRate.module.css';
 import ProductProvider from '../../../context/ProductProvider';
 import Carts from '../../../components/Carts/Carts';
+import Mstyle from './TopRate.module.css';
+
 const TopRateList = () => {
   const { topRateds } = useContext(ProductProvider);
   const [showcart, setShowCart] = useState(0);
