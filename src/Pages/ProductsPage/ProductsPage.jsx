@@ -42,7 +42,6 @@ const ProductsPage = () => {
   const lastPage = nextPage - itemsPerPage;
   const totalPage = Math.ceil(products?.length / itemsPerPage);
   const currentProducts = products?.slice(lastPage, nextPage);
-  console.log(totalPage);
   useEffect(() => {
     setCategory('');
   }, []);
@@ -63,7 +62,7 @@ const ProductsPage = () => {
         return priceFliter & categoryFilters;
       }),
     );
-  }, [selectedCategories, priceLimited, sortOrder]);
+  }, [selectedCategories, priceLimited]);
 
   useEffect(() => {
     if (sortOrder === HIGH_TO_LOW_SORT_BY) {
@@ -104,6 +103,7 @@ const ProductsPage = () => {
               onClick={() => {
                 setProducts(onFilter);
                 loadingProcess();
+                setSortOrder(DEFAULT_SORT_BY);
               }}
               className={Pstyles.setFilterBtn}
             >

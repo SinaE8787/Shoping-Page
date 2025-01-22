@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import ProductProvider from '../../../context/ProductProvider';
 import styles from './SliderRange.module.css';
 

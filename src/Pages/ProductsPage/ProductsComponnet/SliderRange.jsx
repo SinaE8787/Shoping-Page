@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import styles from './SliderRange.module.css';
 import ReactSlider from 'react-slider';
 import ProductProvider from '../../../context/ProductProvider';
 import NumberRange from './NumberRange';
+import styles from './SliderRange.module.css';
 
 const SliderRange = () => {
   const { priceLimit, setPriceLimit, MIN, MAX } = useContext(ProductProvider);

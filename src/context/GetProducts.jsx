@@ -5,6 +5,7 @@ import ProductProvider from './ProductProvider';
 
 const MIN = 10;
 const MAX = 1000;
+
 const GetProducts = ({ children }) => {
   const [topRateds, setTopRateds] = useState(null);
   const [categoryList, setCategoryList] = useState([]);
@@ -72,6 +73,7 @@ const GetProducts = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+
   return (
     <ProductProvider.Provider
       value={{

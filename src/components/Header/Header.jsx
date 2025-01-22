@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDebounce } from '../../hooks/UseDebounce';
+import { useDebounce } from '../../hooks/useDebounce';
 import { fetchProducts } from '../../api/productsFetch';
 import ProductProvider from '../../context/ProductProvider';
 import TopHeader from './TopHeader';
