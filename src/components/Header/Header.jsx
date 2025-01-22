@@ -85,7 +85,7 @@ const Header = () => {
       <div className={Hstyles.navLinks}>
         {isSmallNow ? (
           <div className={Hstyles.openLinksMenu} onClick={() => setDropdownLink((prev) => (prev = !prev))}>
-            onClick
+            Menu
           </div>
         ) : (
           ''

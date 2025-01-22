@@ -7,6 +7,7 @@ import SliderRange from './ProductsComponnet/SliderRange';
 import Carts from '../../components/Carts/Carts';
 import SortByFilters from './ProductsComponnet/SortByFilters';
 import { useDebounce } from '../../hooks/useDebounce';
+
 const PAGE_NUMBER = 1;
 const MIN_ITEM_PER_PAGE = 6;
 const DEFAULT_ITEM_PER_PAGE = 12;
@@ -14,6 +15,7 @@ const MAX_ITEM_PER_PAGE = 18;
 const DEFAULT_SORT_BY = 'default';
 const HIGH_TO_LOW_SORT_BY = 'highToLow';
 const LOW_TO_HIGH_SORT_BY = 'lowToHigh';
+
 const ProductsPage = () => {
   const {
     MIN,
@@ -30,6 +32,7 @@ const ProductsPage = () => {
     setPriceLimit,
     filtersArray,
   } = useContext(ProductProvider);
+
   const { categoryId, query } = useParams();
   const [pageProductNumber, setPageProductNumber] = useState(PAGE_NUMBER);
   const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEM_PER_PAGE);
@@ -42,6 +45,7 @@ const ProductsPage = () => {
   const lastPage = nextPage - itemsPerPage;
   const totalPage = Math.ceil(products?.length / itemsPerPage);
   const currentProducts = products?.slice(lastPage, nextPage);
+
   useEffect(() => {
     setCategory('');
   }, []);
